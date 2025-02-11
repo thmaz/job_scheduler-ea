@@ -84,3 +84,15 @@ g.add_edge(2, 3);  g.add_edge(3, 4);  g.add_edge(3, 7);  g.add_edge(7, 6)
 g.add_edge(6, 5);  g.add_edge(7, 11); g.add_edge(7, 0);  g.add_edge(0, 9)
 g.add_edge(0, 11); g.add_edge(9, 9);  g.add_edge(9, 10); g.add_edge(10, 1)
 g.add_edge(1, 9);  g.add_edge(9, 12); g.add_edge(12, 2)
+
+print('Implementation')
+g.traversal(0, algorithm='bfs')
+
+print('\nActual traversal')
+print(' '.join(map(str, [0, 7, 9, 11, 3, 6, 10, 1, 12, 2, 4, 5])))
+
+print('Implementation')
+g.traversal(0, algorithm='dfs')
+
+print('\nActual traversal')
+print(' '.join(map(str, [0, 7, 9, 11, 3, 6, 10, 1, 12, 2, 4, 5])))
