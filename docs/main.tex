@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage[a4paper, margin=1in]{geometry}
 \begin{document}
 \section{Introduction to Genetic Algorithms}
 \newpage
@@ -15,15 +15,17 @@ The following are the most basic components that are present in most genetic alg
     \item Random mutation of chromosomes in the following generation.
 \end{enumerate}
 
+% Give a general overview
 \bigbreak
 \subsubsection{Fitness Function}
-Fitness is a term from biology which defines the extent to which a certain type of organism is able to pass itself onto the next generation, influenced by how well a given organism does the job it was evolved to do. Say one beaver has bigger teeth than the other, making it faster in cutting down trees. Based on this, the beaver with the bigger teeth has the better 'fit', making it more likely it will pass down its genes. It can be stated with the following question: which survival form will pass the most copies of itself onto the next generation?\medbreak
+Fitness is a term from biology which defines the extent to which a certain type of organism is able to pass itself onto the next generation, influenced by how well a given organism does the job it was evolved to do. Say one beaver has bigger teeth than the other, making it faster in cutting down trees. Based on this, the beaver with the bigger teeth has the better 'fit', making it more likely it will pass down its genes.
+
 In the context of genetic algorithms, the fitness function ...
 
 \bigbreak
 \subsubsection{Chromosomes}
-Usually, a genetic problem is designed to solve a certain problem. Chromosomes can thus be described as the values an individual unit contains, that are used to solve that particular problem. For each individual unit, their corresponding chromosomes are defined in an arrary that contains parameters. The representation of the values that the parameters define is dependent on the problem that the creator is trying to solve. A chromosome can be defined as following:\smallbreak
-chromosome = $\left[ p_{1} ... p_{N} \right]$\smallbreak
+Usually, a genetic problem is designed to solve a certain problem. Chromosomes can thus be described as the values an individual unit contains, that are used to solve that particular problem. For each individual unit, their corresponding chromosomes are defined in an arrary that contains parameters. The representation of the values that the parameters define is dependent on the problem that the creator is trying to solve. A chromosome can be defined as following:\bigbreak
+chromosome = $\left[ p_{1} ... p_{N} \right]$\bigbreak
 Where $N$ is the number of dimensions of the problem and $p$ corresponds to the given parameters. $p$ can be expressed in, for example, binary, real numbers and so forth.
 
 \bigbreak
@@ -31,7 +33,13 @@ Where $N$ is the number of dimensions of the problem and $p$ corresponds to the 
 When producing the next generation, 
 
 \bigbreak
-\section{Methods}
+\section{Weighing Methods}
+For this section, the underlying methods for building a genetic algorithm will be discussed. 
+- runs
+\subsubsection{Selection}
+\subsubsection{Crossover}
+\subsubsection{Mutation}
+\subsubsection{Fitness Function}
 
 \newpage
 \section{Conclusion}
