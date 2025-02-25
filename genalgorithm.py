@@ -4,8 +4,7 @@ import numpy as np
 TARGET = 'Artificial Intelligence'
 
 def compute_fitness(value: str, target: str):
-    ### for each character in the value/target string
-    ### compute the amount of matching characters and return this amount 
+    # Compute the amount of matching characters in target string
     fitness = 0
     for val, tgt in zip(value, target):
         fitness += val == tgt
@@ -34,7 +33,28 @@ class Population:
         pass
 
     def evaluate(self, target):
-        
+        # Evaluate fitness of agents by comparing their value with the target value
+        fitness = compute_fitness
         pass
+
+        def cross_over(self, parents, mutation_rate=0.1):
+        # define new generation
+            new_population = Population(self.n_pop, self.max_len)
+
+            for _ in range(new_population.n_pop):          
+                value = None
+                # For each new agent in the next population, select parents and combine their genes
+                # You are free to define the selection and combination procedures
+                
+                # Mutate newly created agent by adjusting its genes (value)
+                # hint: with probability mutation_rate you randomly add noise
+                
+                new_population.agents.append(Agent(value))
+            
+            return new_population
+
+p = Population(10, 5)
+p.populate()
+[a.value for a in p.agents]
 
 print("finished ...")
