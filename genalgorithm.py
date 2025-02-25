@@ -33,25 +33,28 @@ class Population:
         pass
 
     def evaluate(self, target):
-        # Evaluate fitness of agents by comparing their value with the target value
-        fitness = compute_fitness
+        # Evaluate fitness of agents by comparing value with target
+        fitness = [compute_fitness(a.value, target) for a in self.agents]
+
+        # Sort based on fitness score
+        
         pass
 
-        def cross_over(self, parents, mutation_rate=0.1):
-        # define new generation
-            new_population = Population(self.n_pop, self.max_len)
+    def cross_over(self, parents, mutation_rate=0.1):
+    # define new generation
+        new_population = Population(self.n_pop, self.max_len)
 
-            for _ in range(new_population.n_pop):          
-                value = None
-                # For each new agent in the next population, select parents and combine their genes
-                # You are free to define the selection and combination procedures
-                
-                # Mutate newly created agent by adjusting its genes (value)
-                # hint: with probability mutation_rate you randomly add noise
-                
-                new_population.agents.append(Agent(value))
+        for _ in range(new_population.n_pop):          
+            value = None
+            # For each new agent in the next population, select parents and combine their genes
+            # You are free to define the selection and combination procedures
             
-            return new_population
+            # Mutate newly created agent by adjusting its genes (value)
+            # hint: with probability mutation_rate you randomly add noise
+            
+            new_population.agents.append(Agent(value))
+        
+        return new_population
 
 p = Population(10, 5)
 p.populate()
