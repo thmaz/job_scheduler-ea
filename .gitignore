@@ -2,3 +2,5 @@
 /docs/*
 !/docs/main.tex
 !/docs/main.pdf
+/.ipynb*
+notes.txt
