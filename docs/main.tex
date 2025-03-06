@@ -33,7 +33,6 @@ Where $N$ is the number of dimensions of the problem and $p$ corresponds to the 
 \bigbreak
 \subsubsection{Selection Operator}
 When producing the next generation of the population, their attributes will need to change to see improvement after reproduction. As chromosomes were discussed, they contain the properties individuals in a population hold. These chromosomes need to be slightly changed, while taking the fitness score into consideration, to see improvement in the next generation of the population. This is also called mutation, where the values of chromosomes are changed, be it slightly or radically. The methods at which selection operators work will be discussed in the following section.
-
 \newpage
 \section{Weighing Methods}
 For this section, the sequence of and underlying methods for building a genetic algorithm will be discussed. 
@@ -45,6 +44,9 @@ To start off, the represenation of the first generation needs to be determined. 
 \bigskip
 \subsection{Selection}
 
+\subsubsection{Roulette Wheel}
+
+roulette wheel, linear rank, exponential rank, stochastic universal sampling, tournament, and truncation
 
 \bigskip
 \subsubsection{Fitness Function}
@@ -59,6 +61,11 @@ Several methods for crossover function:
 \subsection{Mutation}
 Problems:
 - Genetic drift
+
+\newpage
+\section{The Scheduling Problem}
+In this section, applying a genetic algorithm to find a solution to a practical problem will be discussed. For the actual implementation in code, see the accompanying \textbf{ea\textunderscore scheduler.ipynb} file.
+
 \newpage
 \section{Conclusion}
 
