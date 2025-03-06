@@ -22,27 +22,43 @@ Fitness is a term from biology which defines the extent to which a certain type 
 
 In the context of genetic algorithms, the fitness function is responsible for making the algorithm able to achieve the purpose it was made for. The fitness function determines how well the evolving chromosomes fit to the goal of the objective over a range of scores. The direction in which the population evolves is based on these scores.
 
+The fitness function is also known an an \textbf{objective function}.
+
 \bigbreak
 \subsubsection{Chromosomes}
-Usually, a genetic problem is designed to solve a certain problem. Chromosomes can thus be described as the values an individual unit contains, that are used to solve that particular problem. For each individual unit, their corresponding chromosomes are defined in an arrary that contains parameters. The representation of the values that the parameters define is dependent on the problem that the creator is trying to solve. A chromosome can be defined as following:\bigbreak
+Usually, the goal of a genetic algorithm is to solve a problem by making units learn what the goal value is. Chromosomes can thus be described as the values an individual unit contains, that are used to define the learning values for individual units. It is a way to represent the learning values.\smallbreak For each individual unit, their corresponding chromosomes are defined in an arrary that contains parameters. The representation of the values that the parameters define is dependent on the problem that the creator is trying to solve. A chromosome can be defined as following:\bigbreak
 chromosome = $\left[ p_{1} ... p_{N} \right]$\bigbreak
 Where $N$ is the number of dimensions of the problem and $p$ corresponds to the given parameters. $p$ can be expressed in, for example, binary, real numbers and so forth.
 
 \bigbreak
 \subsubsection{Selection Operator}
-When producing the next generation of the population, their attributes will need to change to see improvement after reproducing. As chromosomes were discussed, they contain the properties individuals in a population hold. These chromosomes need to be slightly changed, while taking the fitness score into consideration, to see improvement in the next generation of the population. 
+When producing the next generation of the population, their attributes will need to change to see improvement after reproduction. As chromosomes were discussed, they contain the properties individuals in a population hold. These chromosomes need to be slightly changed, while taking the fitness score into consideration, to see improvement in the next generation of the population. This is also called mutation, where the values of chromosomes are changed, be it slightly or radically. The methods at which selection operators work will be discussed in the following section.
 
-\bigbreak
+\newpage
 \section{Weighing Methods}
-For this section, the underlying methods for building a genetic algorithm will be discussed. 
+For this section, the sequence of and underlying methods for building a genetic algorithm will be discussed. 
+\bigskip
 
-\subsubsection{Selection}
-\subsubsection{Crossover}
-Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
-Several methods for crossover function:
-\subsubsection{Mutation}
+\subsection{Initialization}
+To start off, the represenation of the first generation needs to be determined. Often, the properties of the first population will be randomly generated. This makes it possible for the algorithm to find solutions over a wide range within the search space (search space defines the set of all possible points within the search space). However, when presumptions can be made beforehand about the possible solutions, the properties can be seeded with areas in which an optimal solution is likely to be found.
+
+\bigskip
+\subsection{Selection}
+
+
+\bigskip
 \subsubsection{Fitness Function}
 
+\subsection{Selection Operators}
+\bigskip
+\subsection{Crossover}
+Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
+Several methods for crossover function:
+
+\bigskip
+\subsection{Mutation}
+Problems:
+- Genetic drift
 \newpage
 \section{Conclusion}
 
@@ -51,5 +67,7 @@ Several methods for crossover function:
 Carr, J. (2014). An Introduction to Genetic Algorithms.\smallbreak
 https://www.whitman.edu/Documents/Academics/Mathematics/2014/carrjk.pdf
 
-
+Jannoud, I., Jaradat, Y., Masoud, M. Z., Manasrah, A., Alia, M. (2021). The Role of Genetic Algorithm Selection Operators in Extending WSN Stability Period: A Comparative Study. Electronics, 11(1), 28. https://doi.org/10.3390/electronics11010028‌
 \end{document}
+https://www.mdpi.com/2079-9292/11/1/28
+
