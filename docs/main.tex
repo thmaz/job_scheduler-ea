@@ -20,7 +20,7 @@ The following are the most basic components that are present in most genetic alg
 \subsubsection{Fitness Function}
 Fitness is a term from biology which defines the extent to which a certain type of organism is able to pass itself onto the next generation, influenced by how well a given organism does the job it was evolved to do. Say one beaver has bigger teeth than the other, making it faster in cutting down trees. Based on this, the beaver with the bigger teeth has the better 'fit', making it more likely it will pass down its genes.
 
-In the context of genetic algorithms, the fitness function ...
+In the context of genetic algorithms, the fitness function is responsible for making the algorithm able to achieve the purpose it was made for. The fitness function determines how well the evolving chromosomes fit to the goal of the objective over a range of scores. The direction in which the population evolves is based on these scores.
 
 \bigbreak
 \subsubsection{Chromosomes}
@@ -30,12 +30,12 @@ Where $N$ is the number of dimensions of the problem and $p$ corresponds to the 
 
 \bigbreak
 \subsubsection{Selection Operator}
-When producing the next generation, 
+When producing the next generation of the population, their attributes will need to change to see improvement after reproducing. As chromosomes were discussed, they contain the properties individuals in a population hold. These chromosomes need to be slightly changed, while taking the fitness score into consideration, to see improvement in the next generation of the population. 
 
 \bigbreak
 \section{Weighing Methods}
 For this section, the underlying methods for building a genetic algorithm will be discussed. 
-- runs
+
 \subsubsection{Selection}
 \subsubsection{Crossover}
 Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
