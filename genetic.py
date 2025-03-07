@@ -20,7 +20,6 @@ def fitness(schedule, jobs):
         
         return total_profit, completed_jobs
 
-# Note to self: read up on classes in py
 class Job:
     def __init__(self, id: str, deadline: int, profit: int) -> None:
         self.id = id
