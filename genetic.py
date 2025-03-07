@@ -43,8 +43,7 @@ class Population:
     
     def evaluate(self, target):
         for agent in self.agents:
-            
-        return
+        
     
     def cross_over(self, parents, mutation_rate = 0.1):
         new_population = Population(self.n_pop, self.max_len)
