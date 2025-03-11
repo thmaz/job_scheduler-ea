@@ -1,8 +1,6 @@
 import numpy as np
 import random
 
-print("Import success")
-
 def fitness(schedule, jobs):
     time_slots = [0] * max(job.deadline for job in jobs)
     total_profit = 0
@@ -62,24 +60,19 @@ class Population:
                 idx1, idx2 = random.sample(range(len(agent.schedule)), 2)
                 agent.schedule[idx1], agent.schedule[idx2] = agent.schedule[idx2], agent.schedule[idx1]
 
-    def ga_run(jobs: int, pop_size: int, generations: int):
-        pop = Population(pop_size, jobs)
-        pop.populate()
+def ga_run(jobs: int, pop_size: int, generations: int):
+    pop = Population(pop_size, jobs)
+    pop.populate()
 
-        for _ in range (generations):
-            pop.evaluate()
-            parents = pop.agents[:pop.n_pop // 2] # top half of performing parents will be selected
-            new_pop = pop.cross_over(parents)
-            new_pop.mutate()
-            pop = new_pop
-        
-        top_agent = max(pop.agents, key = lambda a: a.fitness)
-        max_profit, job_count = fitness(top_agent.schedule, jobs)
-        return max_profit, job_count
-
-    # Genes will be possible slots for a job to occur
-    # Separate gene for each shift for every controller over a whole week
-    # Gene should represent the solution
-
-    GENES = ""
+    for _ in range (generations):
+        pop.evaluate()
+        parents = pop.agents[:pop.n_pop // 2] # top half of performing parents will be selected
+        new_pop = pop.cross_over(parents)
+        new_pop.mutate()
+        pop = new_pop
     
+    top_agent = max(pop.agents, key = lambda a: a.fitness)
+    max_profit, job_count = fitness(top_agent.schedule, jobs)
+    return max_profit, job_count
+
+print("Import success")
