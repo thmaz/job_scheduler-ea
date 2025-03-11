@@ -1,4 +1,3 @@
-import numpy as np
 import random
 
 def fitness(schedule, jobs):
@@ -17,8 +16,7 @@ def fitness(schedule, jobs):
                 total_profit += job.profit
                 completed_jobs += 1
                 break
-        
-        return total_profit, completed_jobs
+    return total_profit, completed_jobs
 
 class Job:
     def __init__(self, id: str, deadline: int, profit: int) -> None:
@@ -40,27 +38,43 @@ class Population:
     def populate(self):
         self.agents = [Agent(random.sample(range(len(self.jobs)), len(self.jobs))) for _ in range(self.n_pop)]
     
-    def evaluate(self, target):
+    def evaluate(self):
         for agent in self.agents:
             agent.fitness, _ = fitness(agent.schedule, self.jobs)
         self.agents.sort(key=lambda a: a.fitness, reverse=True)
     
+    # Crossover based on jobs so deadlines will be respected during crossover
+    # Randomly select a subset of jobs from one parent
+    # Create child schedule that includes these jobs and fills remaining open slots from other parents jobs
     def cross_over(self, parents):
         new_population = Population(self.n_pop, self.jobs)
+
         for _ in range(new_population.n_pop):
             parent1, parent2 = random.sample(parents, 2)
-            cut = random.randint(1, len(parent1.schedule) - 1)
-            child_schedule = parent1.schedule[:cut]+[job for job in parent2 if job not in parent1.schedule[:cut]]
+
+            # Random subset of jobs get selected from parent 1
+            num_selected_jobs = random.randint(1, len(parent1.schedule))
+            selected_jobs = random.sample(parent1.schedule, num_selected_jobs)
+            
+            # Create child with selected jobs from parent 1
+            child_schedule = selected_jobs[:]
+
+            # Remaining slots filled with jobs from parent 2, while respecting deadlines
+            for job_id in parent2.schedule:
+                if job_id not in child_schedule:
+                    child_schedule.append(job_id)
+                if len(child_schedule) == len(parent1.schedule):
+                    break
             new_population.agents.append(Agent(child_schedule))
         return new_population
     
-    def mutate(self, mutation_rate=0.1):
+    def mutate(self, mutation_rate: float):
         for agent in self.agents:
             if random.random() < mutation_rate:
                 idx1, idx2 = random.sample(range(len(agent.schedule)), 2)
                 agent.schedule[idx1], agent.schedule[idx2] = agent.schedule[idx2], agent.schedule[idx1]
 
-def ga_run(jobs: int, pop_size: int, generations: int):
+def ga_run(jobs: int, pop_size: int, generations: int, mutation_rate: float):
     pop = Population(pop_size, jobs)
     pop.populate()
 
@@ -68,7 +82,7 @@ def ga_run(jobs: int, pop_size: int, generations: int):
         pop.evaluate()
         parents = pop.agents[:pop.n_pop // 2] # top half of performing parents will be selected
         new_pop = pop.cross_over(parents)
-        new_pop.mutate()
+        new_pop.mutate(mutation_rate)
         pop = new_pop
     
     top_agent = max(pop.agents, key = lambda a: a.fitness)
