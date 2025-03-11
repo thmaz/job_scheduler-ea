@@ -1,6 +1,8 @@
 import numpy as np
 import random
 
+print("Import success")
+
 def fitness(schedule, jobs):
     time_slots = [0] * max(job.deadline for job in jobs)
     total_profit = 0
@@ -42,11 +44,38 @@ class Population:
     
     def evaluate(self, target):
         for agent in self.agents:
-        
+            agent.fitness, _ = fitness(agent.schedule, self.jobs)
+        self.agents.sort(key=lambda a: a.fitness, reverse=True)
     
-    def cross_over(self, parents, mutation_rate = 0.1):
-        new_population = Population(self.n_pop, self.max_len)
+    def cross_over(self, parents):
+        new_population = Population(self.n_pop, self.jobs)
+        for _ in range(new_population.n_pop):
+            parent1, parent2 = random.sample(parents, 2)
+            cut = random.randint(1, len(parent1.schedule) - 1)
+            child_schedule = parent1.schedule[:cut]+[job for job in parent2 if job not in parent1.schedule[:cut]]
+            new_population.agents.append(Agent(child_schedule))
         return new_population
+    
+    def mutate(self, mutation_rate=0.1):
+        for agent in self.agents:
+            if random.random() < mutation_rate:
+                idx1, idx2 = random.sample(range(len(agent.schedule)), 2)
+                agent.schedule[idx1], agent.schedule[idx2] = agent.schedule[idx2], agent.schedule[idx1]
+
+    def ga_run(jobs: int, pop_size: int, generations: int):
+        pop = Population(pop_size, jobs)
+        pop.populate()
+
+        for _ in range (generations):
+            pop.evaluate()
+            parents = pop.agents[:pop.n_pop // 2] # top half of performing parents will be selected
+            new_pop = pop.cross_over(parents)
+            new_pop.mutate()
+            pop = new_pop
+        
+        top_agent = max(pop.agents, key = lambda a: a.fitness)
+        max_profit, job_count = fitness(top_agent.schedule, jobs)
+        return max_profit, job_count
 
     # Genes will be possible slots for a job to occur
     # Separate gene for each shift for every controller over a whole week
