@@ -42,32 +42,24 @@ For this section, the sequence of and underlying methods for building a genetic 
 To start off, the represenation of the first generation needs to be determined. Often, the properties of the first population will be randomly generated. This makes it possible for the algorithm to find solutions over a wide range within the search space (search space defines the set of all possible points within the search space). However, when presumptions can be made beforehand about the possible solutions, the properties can be seeded with areas in which an optimal solution is likely to be found.
 
 \bigskip
-\subsection{Selection}
-
+\subsection{Parent Selection}
 \subsubsection{Roulette Wheel}
+\subsubsection{Tournament Selection}
+\subsubsection{Elitism}
 
-roulette wheel, linear rank, exponential rank, stochastic universal sampling, tournament, and truncation
-
-\bigskip
-\subsubsection{Fitness Function}
-
-\subsection{Selection Operators}
 \bigskip
 \subsection{Crossover}
 Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
 Several methods for crossover function:
+\subsubsection{Order Crossover}
+\subsubsection{Partially Mapped Crossover}
 
 \bigskip
 \subsection{Mutation}
+\subsubsection{Swap Mutation}
+\subsubsection{Random Resetting}
 Problems:
 - Genetic drift
-
-\newpage
-\section{The Scheduling Problem}
-For this section, the implementation of a  . For the actual implementation in code, see the accompanying \textbf{ea\textunderscore scheduler.ipynb} file.
-
-Randomly generated population.
-
 
 \newpage
 \section{Conclusion}
