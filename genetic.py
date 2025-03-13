@@ -2,24 +2,28 @@ import random
 import numpy as np
 
 def fitness(schedule, jobs):
-    time_slots = [-1] * max(job.deadline for job in jobs)
+    max_deadline = max(job.deadline for job in jobs)
+    time_slots = [-1] * max_deadline
     total_profit = 0
     completed_jobs = 0
 
-    # print("\nJob Placement Process:")
-    for job_id in schedule:
-        job = jobs[job_id]
-        # range() goes from latest deadline to earliest deadline
-        # provides more flexibility in fitting jobs within the schedule based on deadlines
-        # jobs will run as late as possible to maximize amount of jobs to run in earlier timeslots
-        for t in range(min(job.deadline, len(time_slots)) -1, -1, -1):
+    used_jobs = set()  # Track scheduled jobs
+
+    # Sort jobs by deadline first, then by profit in descending order
+    sorted_jobs = sorted([jobs[job_id] for job_id in schedule], key=lambda j: (j.deadline, -j.profit))
+
+    for job in sorted_jobs:
+        # Try placing job in the latest available slot before its deadline
+        for t in range(job.deadline - 1, -1, -1):
             if time_slots[t] == -1:
                 time_slots[t] = job.id
+                used_jobs.add(job.id)
                 total_profit += job.profit
                 completed_jobs += 1
-                # print(f"Placing Job {job.id} at time slot {t} (Profit: {job.profit})")
-                break
-    return total_profit, completed_jobs
+                break 
+
+    scheduled_jobs = [job for job in time_slots if job != -1]
+    return total_profit, completed_jobs, scheduled_jobs
 
 class Job:
     def __init__(self, id: str, deadline: int, profit: int) -> None:
@@ -44,7 +48,7 @@ class Population:
     
     def evaluate(self):
         for agent in self.agents:
-            agent.fitness, _ = fitness(agent.schedule, self.jobs)
+            agent.fitness, _, _ = fitness(agent.schedule, self.jobs)
         self.agents.sort(key=lambda a: a.fitness, reverse=True)
     
     def select_parent(self, tournament_size: int = 3):
@@ -118,31 +122,38 @@ class Population:
     
     # Partially mapped crossover:
     # This method also maintains relative order, but lets each element appear only once
-    def pm_crossover(self, p1, p2):
+    def pm_crossover(self, p1, p2): # Gets stuck in loop for crossover functions
         size = len(p1)
         start, end = sorted(random.sample(range(size), 2))
 
         child = [-1] * size
         mapping = {}
 
+        # Copy segment from Parent 1 to child
         for i in range(start, end):
             child[i] = p1[i]
             mapping[p1[i]] = p2[i]
         
-        for i in range(start, end):
-            if p2[i] not in mapping.values():
-                continue
-            val = p2[i]
-            while val in mapping:
-                val = mapping[val]
-            child[i] = val
+        seen_values = set(mapping.keys())
 
+        # Fill remaining slots ensuring uniqueness
         for i in range(size):
             if child[i] == -1:
-                child[i] = p2[i]
+                val = p2[i]
+                while val in seen_values:
+                    if val not in mapping:
+                        break
+                    val = mapping[val]
+                child[i] = val
+                seen_values.add(val)
+
+        # Ensure the child is a valid permutation of jobs
+        available_jobs = set(range(size)) - set(child)
+        for i in range(size):
+            if child[i] == -1:
+                child[i] = available_jobs.pop()
 
         return child
-
 
     def mutate(self, mutation_rate: float, mutation_method: str):
         """Mutation function with method selection."""
@@ -165,7 +176,10 @@ class Population:
     # Replace a random gene with a new gene
     def random_resetting(self, schedule):
         idx = random.randint(0, len(schedule) - 1)
-        schedule[idx] = random.choice(range(len(schedule)))  # Replace with a random job ID
+        available_jobs = list(set(range(len(schedule))) - set(schedule))
+        if available_jobs:
+            schedule[idx] = random.choice(available_jobs)  # Replace with a random job ID
+
     
     def print_chromosomes(self):
         for idx, agent in enumerate(self.agents):
@@ -181,17 +195,16 @@ def ga_run(jobs: int, pop_size: int, generations: int, mutation_rate: float, tou
 
     for i in range(generations):
         pop.evaluate()
-
         top_agent = max(pop.agents, key=lambda a: a.fitness)
-        max_profit, job_count = fitness(top_agent.schedule, jobs)
+        max_profit, job_count, best_schedule = fitness(top_agent.schedule, jobs)
         
         # Print the best agent's details for the current generation
         # print(f"Generation {i}: Best agent - Jobs completed: {job_count}, Maximum profit: {max_profit}")
         new_pop = pop.cross_over(tournament_size, crossover_method)
         new_pop.mutate(mutation_rate, mutation_method)
         pop = new_pop
-    
-    max_profit, job_count = fitness(top_agent.schedule, jobs)
-    return max_profit, job_count
+
+    max_profit, job_count, best_schedule = fitness(top_agent.schedule, jobs)
+    return max_profit, job_count, best_schedule
 
 print("Import success")
