@@ -68,7 +68,10 @@ The parents are chosen with a probability proportional to their fitness. Usually
   \end{figure}
 
 \subsubsection{Tournament Selection}
-A subset is randomly chosen, and the best is selected. Say you have a population of $x$ agents. When using tournament selection before crossover, the population will be divided into subsets. $tournament_count = x/tournament_size$ Inside each tournament the best performing agent will be chosen for reproduction. 
+A subset is randomly chosen, and the best is selected. Say you have a population of $x$ agents. When using tournament selection before crossover, the population will be divided into subsets. $tournamentcount = x/tournamentsize$ Inside each tournament (subset) the best performing agent will be chosen for reproduction. 
+
+The process can be defined as the following:
+\
 
 \subsubsection{Elitism}
 The best individuals automatically move to the next generation.
@@ -99,4 +102,5 @@ Jannoud, I., Jaradat, Y., Masoud, M. Z., Manasrah, A., Alia, M. (2021). The Role
 \end{document}
 https://www.mdpi.com/2079-9292/11/1/28
 https://www.baeldung.com/cs/genetic-algorithms-roulette-selection
+https://www.baeldung.com/cs/ga-tournament-selection
 
