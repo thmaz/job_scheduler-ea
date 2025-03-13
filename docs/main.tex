@@ -1,6 +1,11 @@
 \documentclass{article}
 \usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+
 \begin{document}
+
 \section{Introduction to Genetic Algorithms}
 \newpage
 \section{Theory}
@@ -43,12 +48,27 @@ To start off, the represenation of the first generation needs to be determined. 
 
 \bigskip
 \subsection{Parent Selection}
+For this section, a couple of methods will be discussed for selecting parents from the population that can reproduce. Each method will have their respective pros and cons.
 
 \subsubsection{Roulette Wheel}
-Parents are chosen with a probability proportional to their fitness.
+The parents are chosen with a probability proportional to their fitness. Usually when someone spins a roulette wheel, the outcome will be entirely random, since each slot in the wheel will have the same probability of being chosen. However, when implementing a roulette wheel for parent selection in a genetic algorithm, the probability can be adjusted based on the fitness of the parents. With this, it is ensured that only the better performing parents are chosen for reproduction. This, however, does not guarantee that worse performing parents can be selected, since any parent still has a chance of being chosen. The probability increase in relation to the fitness value can ofcourse be defined in the program. 
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.2\linewidth}
+      \includegraphics[width=\linewidth]{images/roulette-1.png}
+      \caption{Roulette wheel}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.2\linewidth}
+      \includegraphics[width=\linewidth]{images/roulette2.png}
+      \caption{Weighted}
+    \end{subfigure}
+    \caption{Comparison between a regular roulette wheel and a weighted roulette wheel}
+    \label{fig:roulette}
+  \end{figure}
 
 \subsubsection{Tournament Selection}
-A subset is randomly chosen, and the best is selected.
+A subset is randomly chosen, and the best is selected. Say you have a population of $x$ agents. When using tournament selection before crossover, the population will be divided into subsets. $tournament_count = x/tournament_size$ Inside each tournament the best performing agent will be chosen for reproduction. 
 
 \subsubsection{Elitism}
 The best individuals automatically move to the next generation.
@@ -78,4 +98,5 @@ https://www.whitman.edu/Documents/Academics/Mathematics/2014/carrjk.pdf
 Jannoud, I., Jaradat, Y., Masoud, M. Z., Manasrah, A., Alia, M. (2021). The Role of Genetic Algorithm Selection Operators in Extending WSN Stability Period: A Comparative Study. Electronics, 11(1), 28. https://doi.org/10.3390/electronics11010028‌
 \end{document}
 https://www.mdpi.com/2079-9292/11/1/28
+https://www.baeldung.com/cs/genetic-algorithms-roulette-selection
 

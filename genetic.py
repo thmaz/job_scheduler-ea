@@ -44,6 +44,7 @@ class Population:
         self.selection_method = selection_method
 
     def populate(self):
+        # Grab random job for each deadline
         self.agents = [Agent(random.sample(range(len(self.jobs)), len(self.jobs))) for _ in range(self.n_pop)]
     
     def evaluate(self):
