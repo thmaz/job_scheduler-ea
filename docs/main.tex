@@ -65,18 +65,29 @@ The parents are chosen with a probability proportional to their fitness. Usually
     \end{subfigure}
     \caption{Comparison between a regular roulette wheel and a weighted roulette wheel}
     \label{fig:roulette}
-  \end{figure}
-
-\subsubsection{Tournament Selection}
-A subset is randomly chosen, and the best is selected. Say you have a population of $x$ agents. When using tournament selection before crossover, the population will be divided into subsets. $tournamentcount = x/tournamentsize$ Inside each tournament (subset) the best performing agent will be chosen for reproduction. 
-
-The process can be defined as the following:
-\
-
-\subsubsection{Elitism}
-The best individuals automatically move to the next generation.
+\end{figure}
 
 \bigskip
+\subsubsection{Elitism}
+With elitism, the agents with the best fitness scores are guaranteed to be carried over. This comes with the benefit that these agents are not lost between generations, so that high quality properties are preserved. This can result in finding a solution much earlier due to the preservation of good solution answers. It can also make the population more stable, since good-fit answers will not be lost between generations.\smallskip
+Elitism can also introduce some negatives. Mainly in reducing population diversity by preserving the best genetics. This can result in a smaller search space being explored, meaning other solutions are less likely to be considered.
+
+\bigskip
+\subsubsection{Tournament Selection}
+A subset is randomly chosen, and the best is selected. When using tournament selection before crossover, the population will be divided into subsets. Inside each tournament (subset) the best performing agent will be chosen for reproduction. For this method, it is relatively simple to control the behaviour of, since the tournament size can be tweaked by the user. The way it gives less fit individuals a change to reproduce is also favourable for introducing variety in the population.\smallskip 
+However, if the tournament size parameter is set too big, it can lead to premature convergence, where diversity in the population is lost. Also the fact that agents that are more fit are more likely to succeed, diversity can be lost, which can prevent exploration of the search space.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[H]{0.5\linewidth}
+    \includegraphics[width=\linewidth]{images/tournament.png}
+  \end{subfigure}
+  \caption{Overview of a tournament selection}
+  \label{fig:tournament}
+\end{figure}
+
+
+\newpage
 \subsection{Crossover}
 Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
 Several methods for crossover function:
