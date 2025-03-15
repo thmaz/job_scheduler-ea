@@ -199,15 +199,18 @@ class Population:
     '''Swap mutation:
     Swap two random genes.'''
     def swap_mutation(self, schedule):
-        '''Grab a random gene to get swapped. Then swap them over.
-        Note that this implementation is not ideal for the current problem.
-        This function does not respect deadlines, which should be done inside
-        this function to ensure a valid schedule that respects deadlines.'''
+        '''Grab two random genes to get swapped. Then swap them over.
+        This method can be effective since it introduces new sequences
+        to the population.'''
         idx1, idx2 = random.sample(range(len(schedule)), 2)
         schedule[idx1], schedule[idx2] = schedule[idx2], schedule[idx1]
 
     '''Random resetting:
-    Replace a random gene with a new gene'''
+    Replace a random gene with a new gene.
+    Same as swap mutation, this will introduce new sequences to the population.
+    Note that both mutation functions may not be as effective in hindsight,
+    since they do not inherently ensure valid positions according to job deadlines when swapping.
+    This will require further testing.'''
     def random_resetting(self, schedule):
         '''Random gene gets selected from the jobs available in the schedule.'''
         idx = random.randint(0, len(schedule) - 1)
