@@ -1,27 +1,37 @@
 import random
 import numpy as np
 
+'''
+Below is an implementation of the fitness function.
+The function takes 'schedule', which is a list of job IDs, ordered by sequence.
+'jobs' represents all available jobs.
+'''
+
 def fitness(schedule, jobs):
     max_deadline = max(job.deadline for job in jobs)
+    ''' time_slots represents the available slots for the schedule '''
     time_slots = [-1] * max_deadline
     total_profit = 0
     completed_jobs = 0
 
-    used_jobs = set()  # Track scheduled jobs
+    ''' used_jobs tracks currently scheduled jobs '''
+    used_jobs = set()
 
-    # Sort jobs by deadline first, then by profit in descending order
-    sorted_jobs = sorted([jobs[job_id] for job_id in schedule], key=lambda j: (j.deadline, -j.profit))
+    for job_id in schedule:
+        job = jobs[job_id]
 
-    for job in sorted_jobs:
-        # Try placing job in the latest available slot before its deadline
-        for t in range(job.deadline - 1, -1, -1):
-            if time_slots[t] == -1:
+        ''' Jobs get scheduled from highest deadline to lowest deadline.
+        This ensures that slots get don't get prematurely filled by jobs with lower profit.
+        This ensures that jobs with higher deadline and profit have a chance to get filled in lower
+        deadline slots, so that profit can get maximized. '''
+        for t in range(min(job.deadline, max_deadline) - 1, -1, -1):
+            if time_slots[t] == -1 and job.id not in used_jobs:
                 time_slots[t] = job.id
-                used_jobs.add(job.id)
+                used_jobs.add(job.id)  # Mark job as scheduled
                 total_profit += job.profit
                 completed_jobs += 1
-                break 
-
+                break  # Move to next job
+    
     scheduled_jobs = [job for job in time_slots if job != -1]
     return total_profit, completed_jobs, scheduled_jobs
 
@@ -41,10 +51,14 @@ class Population:
         self.n_pop = n_pop
         self.jobs = jobs
         self.agents = []
+        ''' Selection methods can be swapped around by the user (see implementation in notebook) '''
         self.selection_method = selection_method
 
     def populate(self):
-        # Grab random job for each deadline
+        ''' Population gets randomly initialised.
+        Note that this might be suboptimal, since this instantiation does not ensure
+        that deadlines get respected. This was passed over to the fitness function to control,
+        but it might have been more optimal to introduce more restrictions in instantiation.'''
         self.agents = [Agent(random.sample(range(len(self.jobs)), len(self.jobs))) for _ in range(self.n_pop)]
     
     def evaluate(self):
@@ -123,7 +137,7 @@ class Population:
     
     # Partially mapped crossover:
     # This method also maintains relative order, but lets each element appear only once
-    def pm_crossover(self, p1, p2): # Gets stuck in loop for crossover functions
+    def pm_crossover(self, p1, p2):
         size = len(p1)
         start, end = sorted(random.sample(range(size), 2))
 
@@ -157,7 +171,6 @@ class Population:
         return child
 
     def mutate(self, mutation_rate: float, mutation_method: str):
-        """Mutation function with method selection."""
         for agent in self.agents:
             if random.random() < mutation_rate:
                 if mutation_method == "swap":

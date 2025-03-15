@@ -38,6 +38,13 @@ Where $N$ is the number of dimensions of the problem and $p$ corresponds to the 
 \bigbreak
 \subsubsection{Selection Operator}
 When producing the next generation of the population, their attributes will need to change to see improvement after reproduction. As chromosomes were discussed, they contain the properties individuals in a population hold. These chromosomes need to be slightly changed, while taking the fitness score into consideration, to see improvement in the next generation of the population. This is also called mutation, where the values of chromosomes are changed, be it slightly or radically. The methods at which selection operators work will be discussed in the following section.
+
+\bigskip
+\subsection{Convergence}
+
+\bigskip
+\subsection{Local optima}
+
 \newpage
 \section{Weighing Methods}
 For this section, the sequence of and underlying methods for building a genetic algorithm will be discussed. 
@@ -86,13 +93,32 @@ However, if the tournament size parameter is set too big, it can lead to prematu
   \label{fig:tournament}
 \end{figure}
 
-
 \newpage
 \subsection{Crossover}
 Genetic operator to combine information of parents or use cloning. Child can be subject to mutation, see next subsection. Typically, the genetic structure consists of data structures, like arrays of bits, vectors and arrays.\smallbreak
-Several methods for crossover function:
+In the following subsections, two methods of crossover relevant to the job sequencing problem, order and partially mapped crossover, will be discussed.
+
+\bigskip
 \subsubsection{Order Crossover}
+The main goal of order crossover is to combine the genetic properties of two parents while maintaining the order of their genes. Like any crossover function, two parents are selected for combining their genetic properties to make a new child. A segment of the first parents' genetic properties are selected and will be copied to the child into the same position in its' genetic properties. Then, the remaining elements of the second parent are crossed over to the child, while keeping the order of the properties of the second parents' genetics.
+\smallbreak
+The benefits of using order crossover are the preservation of order of the parents' genetic sequence, it also introduces diversity in the offspring. This method can however be more difficult to implement than other crossover methods, like single point crossover, which simply swaps part of the genetic sequences of parents.
+
+\bigskip 
 \subsubsection{Partially Mapped Crossover}
+With partially mapped crossover, the combination of two parents' permutations takes place with preserving order and uniquess in mind. The way it works is similar to order crossover, where a segment of the first parents' genetic sequence is taken and placed in order for the genetic sequence of the child. See figure \ref{fig:pmx}.
+
+\smallskip
+However with partially mapped crossover, the values between parents are mapped, so that it is ensured that the offspring contains valid permutations. So, when creating a child, the segment of the first parent is copied over the the child. Next, the remaining positions in the offspring are filled with elements from the second parent, but if an element from the second parent is already present in the offspring (due to the mapping), it is replaced by the corresponding mapped element from the first parent.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[H]{0.6\linewidth}
+    \includegraphics[width=\linewidth]{images/pmx.png}
+  \end{subfigure}
+  \caption{Overview of partially mapped crossover.}
+  \label{fig:pmx}
+\end{figure}
 
 \bigskip
 \subsection{Mutation}
