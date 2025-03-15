@@ -6,9 +6,7 @@
 
 \begin{document}
 
-\section{Introduction to Genetic Algorithms}
-\newpage
-\section{Theory}
+\section{Theory of Genetic Algorithms}
 
 \subsection{Basic Components}
 The following are the most basic components that are present in most genetic algorithms:
@@ -41,9 +39,14 @@ When producing the next generation of the population, their attributes will need
 
 \bigskip
 \subsection{Convergence}
+Convergence refers to the extent to which a genetic algorithm approaches a solution or a set of solutions over a span of time.
+When the algorithm is correctly implemented, convergence means that the population is moving towards finding a solution, which can be noted by the individuals within the population becoming more similar to eachother. When the average fitness is climbing is usually indicative of the population moving toward convergence.
+\smallbreak
+In the ideal situation, the population will move to convergence for a "global optimum", meaning that it is moving towards the best possible solution in the entire search space. However, more often an algorithm will move to convergence for a "local optimum", meaning that it is moving towards the best possible solution compared to neighbouring solutions. This can be seen as finding a "good" answer, but not the "best" answer. More often than not, finding the global optimum would be too time intensive to be computed. This is why finding a good-enough answer is the general goal for most genetic algorithms.
 
 \bigskip
-\subsection{Local optima}
+\subsubsection{Premature Convergence}
+When a genetic algorithm finds an answer without exploring enough of the search space, it will often lead to a suboptimal answer. This is also called "premature convergence". This is often due to the properties of the population becoming too similar too quick, which leads to the situating getting stuck in a local optimum without being able to "see" other local optima. When diversity is low, the genetic algorithm may fail to explore other promising areas of the solution space. \smallbreak Since the algorithm provided a solution before experiencing enough variation, finding an optimal method for introducing enough variety into the population is often what makes or breaks a genetic algorithm. In the section below, different methods for introducing variation into the population will be discussed.  
 
 \newpage
 \section{Weighing Methods}
@@ -122,11 +125,22 @@ However with partially mapped crossover, the values between parents are mapped, 
 
 \bigskip
 \subsection{Mutation}
+\bigskip
 \subsubsection{Swap Mutation}
+Swap mutation is one of the most basic mutation functions for genetic algorithms. It goes as follows:
+\begin{enumerate}
+  \item An agent is selected for mutation.
+  \item Two positions in the gene sequence are selected.
+  \item The two selected genes are then swapped over.
+\end{enumerate}
+\smallskip
+The benefit of using swap mutation is that it introduces new sequences to the population, while maintaining valid permutations, meaning that all elements of the reference set/schedule only appear once in the genetic sequence.
+\bigskip
 \subsubsection{Random Resetting}
-Problems:
-- Genetic drift
-
+With random resetting, one or more positions within the chosen individual are randomly selected for resetting. These positions can either be chosen at random or predetetermined. The selected positions then get replaced by either a new random value, or from a subset of available values chosen for resetting.
+\smallskip
+Just like swap mutation, random resetting can introduce significant diversity to the population. Both methods are suitable for preventing premature convergence to local optima, since 
+By introducing new values, random resetting is suitable for expanding the exploration of new solutions in the search space.
 \newpage
 \section{Conclusion}
 
