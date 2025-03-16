@@ -248,4 +248,30 @@ def ga_run(jobs: int, pop_size: int, generations: int, mutation_rate: float, tou
     max_profit, job_count, best_schedule = fitness(top_agent.schedule, jobs)
     return max_profit, job_count, best_schedule
 
+def run_experiments(jobs, pop_size, generations, mutation_rate):
+    results = {}
+    selection_methods = ["tournament", "roulette", "elitism"]
+    crossover_methods = ["order", "pmx"]
+    mutation_methods = ["swap", "random_reset"]
+    
+    for selection_method in selection_methods:
+        for crossover_method in crossover_methods:
+            for mutation_method in mutation_methods:
+                max_profits = []
+                pop = Population(pop_size, jobs, selection_method)
+                pop.populate()
+
+                for generation in range(generations):
+                    pop.evaluate()
+                    max_profit, job_count, best_schedule = fitness(pop.agents[0].schedule, jobs)
+                    max_profits.append(max_profit)
+
+                    new_pop = pop.cross_over(tournament_size=3, crossover_method=crossover_method)
+                    new_pop.mutate(mutation_rate, mutation_method)
+                    pop = new_pop
+
+                results[(selection_method, crossover_method, mutation_method)] = max_profits
+
+    return results
+
 print("Import success")
