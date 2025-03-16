@@ -31,7 +31,7 @@ def fitness(schedule, jobs):
         ''' Jobs get scheduled from highest deadline to lowest deadline.
         This ensures that slots get don't get prematurely filled by jobs with lower profit.
         This ensures that jobs with higher deadline and profit have a chance to get filled in lower
-        deadline slots, so that profit can get maximized. '''
+        deadline slots, so that profit can get maximized.'''
         for t in range(min(job.deadline, max_deadline) - 1, -1, -1):
             if time_slots[t] == -1 and job.id not in used_jobs:
                 time_slots[t] = job.id
@@ -216,7 +216,7 @@ class Population:
         idx = random.randint(0, len(schedule) - 1)
         available_jobs = list(set(range(len(schedule))) - set(schedule))
         if available_jobs:
-            schedule[idx] = random.choice(available_jobs)  # Replace with a random job ID
+            schedule[idx] = random.choice(available_jobs)
     
     '''Function for printing the chromosomes for the initial population to make 
     chromosomes visible for the user.'''
